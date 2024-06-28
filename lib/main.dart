@@ -1,19 +1,33 @@
-import 'package:dars5/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:online_shop_animation/controller/order_controller.dart';
+import 'package:online_shop_animation/controller/product_controller.dart';
+import 'package:online_shop_animation/views/screens/home_page.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main(List<String> args) {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (ctx) {
+          return ProductController();
+        }),
+        ChangeNotifierProvider(create: (ctx) {
+          return CartController();
+        }),
+      ],
+      builder: (context, child) {
+        return const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: HomePage(),
+        );
+      },
     );
   }
 }
